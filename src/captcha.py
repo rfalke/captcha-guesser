@@ -169,7 +169,12 @@ class Guesser:
       h=end_y-start_y
       if h>=self.minimal_letter_height:
         result.append((start_x, start_y, end_x,end_y))
+
+    def is_all_black(letter_bbox):
+      im3 = im2.crop(letter_bbox)
+      return im3.histogram()[0] == im3.size[0]*im3.size[1]
       
+    result=[x for x in result if not is_all_black(x)]
     return result
   
   def draw_letter_boxes(self, image, color):
