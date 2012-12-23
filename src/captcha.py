@@ -192,11 +192,12 @@ class Guesser:
   def find_best_single_letter_match(self, letter_bbox):
     im2 = self.blackwhite_image
     im3 = im2.crop(letter_bbox)
+    vec=buildvector(im3)
 
     guess = []
     for letter,images in self.iconset.items():
       for imagevector in images:
-        sim=getVectorSim(imagevector, buildvector(im3))
+        sim=getVectorSim(imagevector, vec)
         guess.append((sim, letter))
 
     guess.sort(reverse=True)
