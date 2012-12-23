@@ -33,7 +33,7 @@ class Guesser:
     self.iconset_dir=iconset_dir
     self.iconset=self.read_iconset(iconset_dir)
     self.do_print_histogram=0
-    self.do_save_debug_images=1
+    self.do_save_debug_images=kw.get("do_save_debug_images", 1)
     
     self.minimal_letter_width=kw.get("minimal_letter_width", 1)
     self.minimal_letter_height=kw.get("minimal_letter_height", 1)
