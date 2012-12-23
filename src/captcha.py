@@ -34,6 +34,7 @@ class Guesser:
     self.iconset=self.read_iconset(iconset_dir)
     self.do_print_histogram=0
     self.do_save_debug_images=kw.get("do_save_debug_images", 1)
+    self.do_write_mismatching_letters=kw.get("do_write_mismatching_letters", 1)
     
     self.minimal_letter_width=kw.get("minimal_letter_width", 1)
     self.minimal_letter_height=kw.get("minimal_letter_height", 1)
@@ -59,7 +60,7 @@ class Guesser:
       self.draw_letter_boxes(im, "blue")
       self.save_debug_image(im, "letters")
       
-    code = self.find_code(1)
+    code = self.find_code()
     return code
 
   def read_iconset(self,iconset_dir):
@@ -202,7 +203,7 @@ class Guesser:
     best_sim,best_letter=guess[0]
     return (best_sim,best_letter,im3)
 
-  def find_code(self, write_mismatching_letters):
+  def find_code(self):
     res=[]
     
     for letterno in range(len(self.letter_bboxes)):
@@ -211,8 +212,8 @@ class Guesser:
       if sim>=self.minimal_similarity:
         res.append(letter)
       else:
-        print "  best guess for letter %d is '%s' with similarity of %.5f which is too low"%(letterno, letter,sim)
-        if write_mismatching_letters:
+        #print "  best guess for letter %d is '%s' with similarity of %.5f which is too low"%(letterno, letter,sim)
+        if self.do_write_mismatching_letters:
           self.write_unknown_letter_image(im)
         res.append(None)
     if None not in res:
